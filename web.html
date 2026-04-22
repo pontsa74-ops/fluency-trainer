@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Fluency Trainer Web</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #5f2c82, #49a09d);
+  margin: 0;
+  padding: 40px;
+  color: white;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+}
+
+h1 {
+  text-align: center;
+}
+
+.chat {
+  background: white;
+  color: black;
+  border-radius: 12px;
+  padding: 15px;
+  height: 400px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.message {
+  margin-bottom: 10px;
+}
+
+.user {
+  text-align: right;
+  font-weight: bold;
+}
+
+.bot {
+  text-align: left;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: white;
+  color: #5f2c82;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Fluency Trainer</h1>
+
+  <div id="chat" class="chat"></div>
+
+  <textarea id="input" placeholder="Введите сообщение..."></textarea>
+  <button onclick="send()">Отправить</button>
+</div>
+
+<script>
+async function send() {
+  const inputField = document.getElementById("input");
+  const chat = document.getElementById("chat");
+
+  const text = inputField.value.trim();
+  if (!text) return;
+
+  // USER MESSAGE
+  const userMsg = document.createElement("div");
+  userMsg.className = "message user";
+  userMsg.innerText = "Вы: " + text;
+  chat.appendChild(userMsg);
+
+  inputField.value = "";
+
+  // LOADING
+  const loadingMsg = document.createElement("div");
+  loadingMsg.className = "message bot";
+  loadingMsg.innerText = "Бот думает...";
+  chat.appendChild(loadingMsg);
+
+  try {
+    const res = await fetch("https://hook.eu1.make.com/shwm34m21sy4wxrhikfe3yizcfjihud", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        text: text
+      })
+    });
+
+    const data = await res.json();
+
+    loadingMsg.innerText = data.reply || "Нет ответа";
+
+    chat.scrollTop = chat.scrollHeight;
+
+  } catch (error) {
+    console.error(error);
+    loadingMsg.innerText = "Ошибка подключения";
+  }
+}
+</script>
+
+</body>
+</html>
