@@ -141,9 +141,27 @@ async function send() {
       })
     });
 
-    const data = await res.json();
+    // ✅ Check HTTP status first
+    if (!res.ok) {
+      chat.innerHTML += "<p style='color:red'><b>Ошибка сервера (" + res.status + ")</b></p>";
+      return;
+    }
 
-    chat.innerHTML += "<p><b>Бот:</b> " + (data.reply || "Ошибка ответа") + "</p>";
+    // ✅ Safe JSON parse
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      chat.innerHTML += "<p style='color:red'><b>Некорректный ответ от сервера</b></p>";
+      return;
+    }
+
+    // ✅ Validate reply
+    if (!data || typeof data.reply !== "string" || data.reply.trim() === "") {
+      chat.innerHTML += "<p style='color:red'><b>Пустой ответ от сервера</b></p>";
+    } else {
+      chat.innerHTML += "<p><b>Бот:</b> " + data.reply + "</p>";
+    }
 
   } catch (error) {
     chat.innerHTML += "<p style='color:red'><b>Ошибка подключения</b></p>";
