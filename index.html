@@ -118,6 +118,27 @@ button {
   padding: 30px;
   color: white;
 }
+  .chat-box {
+  max-height: 300px;
+  overflow-y: auto;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.message {
+  margin-bottom: 10px;
+}
+
+.user {
+  text-align: right;
+  font-weight: bold;
+}
+
+.bot {
+  text-align: left;
+}
 </style>
 </head>
 
@@ -235,10 +256,11 @@ button {
 <div class="section" id="web">
   <h2>Попробовать прямо сейчас</h2>
 
-  <textarea id="input" rows="4" placeholder="Введите предложение..."></textarea>
-  <button onclick="send()">Отправить</button>
+  <div id="chat" class="chat-box"></div>
 
-  <div class="response" id="response"></div>
+  <textarea id="input" placeholder="Введите сообщение..."></textarea>
+
+  <button onclick="send()">Отправить</button>
 </div>
 
 <div class="section">
