@@ -7,15 +7,30 @@
 
 <style>
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #5f2c82, #49a09d);
   color: white;
   text-align: center;
+  margin: 0;
 }
 
 .container {
-  max-width: 600px;
-  margin: 50px auto;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.section {
+  margin-bottom: 30px;
 }
 
 .chat-box {
@@ -28,24 +43,37 @@ body {
   text-align: left;
 }
 
-.input-box {
-  margin-top: 20px;
-}
-
 textarea {
   width: 100%;
   padding: 10px;
   border-radius: 10px;
+  border: none;
 }
 
 button {
   margin-top: 10px;
-  padding: 10px 20px;
+  padding: 12px 25px;
   background: #6a11cb;
   color: white;
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.telegram-btn {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 12px 25px;
+  background: #0088cc;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.disclaimer {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-top: 10px;
 }
 </style>
 </head>
@@ -53,14 +81,42 @@ button {
 <body>
 
 <div class="container">
+
   <h1>Fluency Trainer</h1>
+
+  <div class="subtitle">
+    Improve your language skills by practicing real conversations with an AI trainer.
+  </div>
+
+  <div class="section">
+    <p>
+      You don’t need a speaking partner, a class, or extra time in your schedule.
+      This bot helps you train fluency through real, spontaneous interaction.
+    </p>
+    <p>
+      It corrects your sentences, explains mistakes, and keeps the conversation going —
+      just like a real partner would.
+    </p>
+  </div>
+
+  <div class="section">
+    <h2>Try it now</h2>
+    <p>Enter a phrase below to start a conversation and get instant feedback.</p>
+  </div>
 
   <div id="chat" class="chat-box"></div>
 
-  <div class="input-box">
-    <textarea id="input" rows="3" placeholder="Введите сообщение..."></textarea>
-    <button onclick="send()">Отправить</button>
+  <textarea id="input" rows="3" placeholder="Введите сообщение..."></textarea>
+  <button onclick="send()">Отправить</button>
+
+  <div class="section disclaimer">
+    Please note: the web version has limited functionality.
   </div>
+
+  <a href="https://t.me/fluencytrainerbot" target="_blank" class="telegram-btn">
+    Open full version in Telegram
+  </a>
+
 </div>
 
 <script>
@@ -71,7 +127,6 @@ async function send() {
 
   if (!input) return;
 
-  // Show user message
   chat.innerHTML += "<p><b>Вы:</b> " + input + "</p>";
   inputField.value = "";
 
@@ -86,20 +141,9 @@ async function send() {
       })
     });
 
-    const text = await res.text();
+    const data = await res.json();
 
-    console.log("RAW RESPONSE:", text);
-
-    let reply;
-
-    try {
-      const data = JSON.parse(text);
-      reply = data.reply || text;
-    } catch {
-      reply = text;
-    }
-
-    chat.innerHTML += "<p><b>Бот:</b> " + reply + "</p>";
+    chat.innerHTML += "<p><b>Бот:</b> " + (data.reply || "Ошибка ответа") + "</p>";
 
   } catch (error) {
     chat.innerHTML += "<p style='color:red'><b>Ошибка подключения</b></p>";
