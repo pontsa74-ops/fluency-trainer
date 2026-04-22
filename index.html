@@ -58,7 +58,6 @@ body {
   text-decoration: none;
   font-weight: 600;
   display: inline-block;
-  cursor: pointer;
 }
 
 .primary {
@@ -93,7 +92,33 @@ body {
   flex: 1;
 }
 
-/* CHAT */
+textarea {
+  width: 100%;
+  padding: 10px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px;
+  background: #5f2c82;
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.response {
+  margin-top: 20px;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.footer {
+  text-align: center;
+  padding: 30px;
+  color: white;
+}
+
 .chat-box {
   max-height: 300px;
   overflow-y: auto;
@@ -114,33 +139,6 @@ body {
 
 .bot {
   text-align: left;
-}
-
-/* INPUT */
-textarea {
-  width: 100%;
-  padding: 10px;
-  border-radius: 8px;
-}
-
-button {
-  margin-top: 10px;
-  padding: 10px;
-  background: #5f2c82;
-  color: white;
-  border: none;
-  border-radius: 8px;
-}
-
-.footer {
-  text-align: center;
-  padding: 30px;
-  color: white;
-}
-
-/* HIDDEN WEB APP */
-#web {
-  display: none;
 }
 </style>
 </head>
@@ -163,7 +161,7 @@ button {
 
   <div class="buttons">
     <a href="https://t.me/fluencytrainerbot?start=landing" class="btn primary">Открыть в Telegram</a>
-    <button class="btn secondary" onclick="openWeb()">Попробовать здесь</button>
+    <a href="web.html" class="btn secondary">Попробовать здесь</a>
   </div>
 
   <p style="margin-top:10px;">
@@ -171,92 +169,104 @@ button {
   </p>
 </div>
 
-<!-- ВСЕ СЕКЦИИ ОСТАЮТСЯ БЕЗ ИЗМЕНЕНИЙ -->
 <div class="section">
   <h2>Изучение языка часто упирается в отсутствие практики</h2>
-  <p>Можно понимать грамматику и знать слова, но в реальной ситуации не хватает уверенности говорить.</p>
-  <p>Fluency Trainer решает эту проблему. Он задаёт вопросы, поддерживает диалог, исправляет ваши ответы и помогает привыкнуть к реальному общению.</p>
+  <p>
+  Можно понимать грамматику и знать слова, но в реальной ситуации не хватает уверенности говорить.
+  </p>
+
+  <p>
+  Fluency Trainer решает эту проблему. Он задаёт вопросы, поддерживает диалог,
+  исправляет ваши ответы и помогает вам привыкнуть к реальному общению.
+  Вместо заученных диалогов вы тренируете способность отвечать в живых,
+  непредсказуемых ситуациях.
+  </p>
 </div>
 
 <div class="section">
   <h2>Простая авторизация через Telegram</h2>
-  <p>Всё работает через Telegram — просто откройте бота и начните использовать.</p>
+  <p>
+  Вам не нужно создавать аккаунт или проходить регистрацию.
+  Всё работает через Telegram — просто откройте бота и начните использовать.
+  </p>
 </div>
 
 <div class="section">
   <h2>Как работает бот</h2>
+
   <p>Бот имеет два режима: ручной и автоматический.</p>
+
+  <div class="two">
+    <div>
+      <h3>Ручной режим</h3>
+      <p>
+      В ручном режиме пользователь активно взаимодействует с ботом.
+      Можно общаться в формате диалога или в формате вопросов.
+      </p>
+
+      <p>
+      Бот задаёт вопрос, пользователь отвечает, после чего бот исправляет ответ,
+      объясняет ошибку и продолжает взаимодействие.
+      В зависимости от выбора пользователя бот либо задаёт уточняющий вопрос,
+      либо предлагает новый, случайный вопрос.
+      </p>
+    </div>
+
+    <div>
+      <h3>Автоматический режим</h3>
+      <p>
+      Автоматический режим создан для подготовки к случайным,
+      неподготовленным разговорам и тренировки способности отвечать спонтанно.
+      </p>
+
+      <p>
+      Бот отправляет сообщения через определённые интервалы времени.
+      Пользователь отвечает, а бот сразу исправляет ответ.
+      </p>
+    </div>
+  </div>
 </div>
 
 <div class="section">
   <h2>Удобство использования</h2>
-  <p>Вы можете отправлять голосовые сообщения. Бот понимает речь и обрабатывает её так же, как текст.</p>
+  <p>
+  Вы можете отправлять голосовые сообщения.
+  Бот понимает речь и обрабатывает её так же, как текст.
+  </p>
 </div>
 
 <div class="section">
   <h2>Как начать</h2>
-  <p>Нажмите Start → выберите язык → выберите режим → начните практику</p>
-</div>
 
-<!-- 🔥 WEB APP (СКРЫТ И ПОЯВЛЯЕТСЯ ПО КНОПКЕ) -->
-<div class="section" id="web">
-  <h2>Попробовать прямо сейчас</h2>
+  <p>Нажмите Start</p>
+  <p>Выберите язык</p>
+  <p>Выберите режим (ручной или автоматический)</p>
+  <p>Начните практику</p>
 
-  <div id="chat" class="chat-box"></div>
-
-  <textarea id="input" placeholder="Введите сообщение..."></textarea>
-  <button onclick="send()">Отправить</button>
-
-  <p style="margin-top:15px; font-size:14px; opacity:0.7;">
-    Обратите внимание: веб-версия имеет ограниченный функционал.
+  <p style="margin-top:20px;">
+  Если вы хотите изменить язык или режим, просто снова нажмите Start.
   </p>
 
-  <a href="https://t.me/fluencytrainerbot" class="btn primary" target="_blank">
-    Открыть полную версию в Telegram
+  <p>
+  Если вы чувствуете, что достигли результата — вы можете переключиться
+  на ручной режим или удалить бота.
+  </p>
+</div>
+
+<div class="section">
+  <h2>Попробуйте сейчас и улучшите свой уровень</h2>
+  <p>
+  Начните практиковаться уже сегодня и развивайте навыки общения в реальных ситуациях.
+  </p>
+
+  <a href="https://t.me/fluencytrainerbot?start=landing" class="btn primary">
+    Открыть бота
   </a>
 </div>
 
 <div class="footer">
   Fluency Trainer © 2026
 </div>
-
-<script>
-function openWeb() {
-  const web = document.getElementById("web");
-  web.style.display = "block";
-  web.scrollIntoView({ behavior: "smooth" });
-}
-
-async function send() {
-  const inputField = document.getElementById("input");
-  const chat = document.getElementById("chat");
-  const text = inputField.value.trim();
-
-  if (!text) return;
-
-  chat.innerHTML += `<div class="message user">Вы: ${text}</div>`;
-  inputField.value = "";
-
-  try {
-    const res = await fetch("https://hook.eu1.make.com/fl9pxf9xzao8grt87llyo6pdlio89wqf", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message: text })
-    });
-
-    const data = await res.json();
-
-    chat.innerHTML += `<div class="message bot">Бот: ${data.reply || "Нет ответа"}</div>`;
-
-  } catch (error) {
-    chat.innerHTML += `<div class="message bot" style="color:red;">Ошибка подключения</div>`;
-  }
-
-  chat.scrollTop = chat.scrollHeight;
-}
-</script>
 
 </body>
 </html>
